@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "notcake.Functional.Tests", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "notcake.Unity.Prefab", "notcake.Unity.Prefab\notcake.Unity.Prefab.csproj", "{638E058F-740A-4583-8A87-FD3E2584BBB9}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "notcake.Unity.Prefab.Tests.Resources", "notcake.Unity.Prefab.Tests.Resources\notcake.Unity.Prefab.Tests.Resources.csproj", "{2821250B-8D56-4E41-B2F8-8D72871473EC}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "notcake.Unity.Yaml", "notcake.Unity.Yaml\notcake.Unity.Yaml.csproj", "{6124F03A-2747-45FD-ADD5-3EC5780C2E0B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "notcake.Unity.Yaml.Tests", "notcake.Unity.Yaml.Tests\notcake.Unity.Yaml.Tests.csproj", "{3E0AA583-4957-402C-9656-EC6B94D90D87}"
@@ -43,6 +45,10 @@ Global
 		{638E058F-740A-4583-8A87-FD3E2584BBB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{638E058F-740A-4583-8A87-FD3E2584BBB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{638E058F-740A-4583-8A87-FD3E2584BBB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2821250B-8D56-4E41-B2F8-8D72871473EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2821250B-8D56-4E41-B2F8-8D72871473EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2821250B-8D56-4E41-B2F8-8D72871473EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2821250B-8D56-4E41-B2F8-8D72871473EC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6124F03A-2747-45FD-ADD5-3EC5780C2E0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6124F03A-2747-45FD-ADD5-3EC5780C2E0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6124F03A-2747-45FD-ADD5-3EC5780C2E0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
