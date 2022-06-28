@@ -5,6 +5,8 @@ VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "notcake.Algorithms", "notcake.Algorithms\notcake.Algorithms.csproj", "{30AA8480-D99E-48CC-B86B-F186E9D35C15}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "notcake.Algorithms.Tests", "notcake.Algorithms.Tests\notcake.Algorithms.Tests.csproj", "{F308C858-533A-463D-9F8C-CBDE0B83663E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{30AA8480-D99E-48CC-B86B-F186E9D35C15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30AA8480-D99E-48CC-B86B-F186E9D35C15}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30AA8480-D99E-48CC-B86B-F186E9D35C15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F308C858-533A-463D-9F8C-CBDE0B83663E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F308C858-533A-463D-9F8C-CBDE0B83663E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F308C858-533A-463D-9F8C-CBDE0B83663E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F308C858-533A-463D-9F8C-CBDE0B83663E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
