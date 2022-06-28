@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "notcake.Functional", "notca
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "notcake.Functional.Tests", "notcake.Functional.Tests\notcake.Functional.Tests.csproj", "{70FA7516-E3F9-4A62-91AA-1A05745ADF27}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "notcake.Unity.Yaml", "notcake.Unity.Yaml\notcake.Unity.Yaml.csproj", "{6124F03A-2747-45FD-ADD5-3EC5780C2E0B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{70FA7516-E3F9-4A62-91AA-1A05745ADF27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70FA7516-E3F9-4A62-91AA-1A05745ADF27}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70FA7516-E3F9-4A62-91AA-1A05745ADF27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6124F03A-2747-45FD-ADD5-3EC5780C2E0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6124F03A-2747-45FD-ADD5-3EC5780C2E0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6124F03A-2747-45FD-ADD5-3EC5780C2E0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6124F03A-2747-45FD-ADD5-3EC5780C2E0B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
