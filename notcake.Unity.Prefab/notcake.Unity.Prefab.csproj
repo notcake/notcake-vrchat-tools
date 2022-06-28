@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\notcake.Functional\notcake.Functional.csproj" />
+    <ProjectReference Include="..\notcake.Unity.Yaml\notcake.Unity.Yaml.csproj" />
+  </ItemGroup>
+
+</Project>
