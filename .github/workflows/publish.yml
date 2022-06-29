@@ -1,0 +1,69 @@
+name: Publish
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: linux
+            os: ubuntu-latest
+            runtime: linux-x64
+          - name: windows
+            os: windows-latest
+            runtime: win-x64
+          - name: macos
+            os: macos-latest
+            runtime: osx-x64
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore --runtime ${{ matrix.runtime }}
+    - name: Publish
+      shell: bash
+      run: |
+        tag="${GITHUB_REF#refs/tags/}"
+        release_name="notcake-vrchat-tools-$tag-${{ matrix.name }}"
+        executable_projects=$(
+          grep -F "<OutputType>Exe</OutputType>" */*.csproj -l |
+          xargs -L 1 dirname
+        )
+        
+        for executable_project in $executable_projects; do
+          dotnet publish $executable_project \
+                         --no-restore \
+                         --configuration Release \
+                         --runtime ${{ matrix.runtime }} \
+                         --no-self-contained \
+                         --property:PublishSingleFile=true \
+                         --property:UseAppHost=true \
+                         --output build
+        done
+        
+        mkdir release
+        if [ "${{ matrix.name }}" == "windows" ]; then
+          7z a -tzip "release/${release_name}.zip" "./build/*"
+          cp build/*.exe "./release/"
+        else
+          pushd build
+            tar -czvf "../release/${release_name}.tar.gz" *
+          popd
+        fi
+        
+        rm -rf ./build
+    - name: Create release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: "release/*"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
