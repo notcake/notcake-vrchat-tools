@@ -187,7 +187,9 @@ namespace notcake.Unity.Prefab
                         // `GameObjects` ordered by `fileID`.
                         return (1, @object.FileID, -1);
                     }
-                    else if (!@object.IsInstance && objectAsComponent != null)
+                    else if (!@object.IsInstance &&
+                             objectAsComponent != null &&
+                             !(objectAsComponent.GameObject?.IsInstance ?? false))
                     {
                         // Per-`GameObject` components in `m_Component` order.
                         return (1, objectAsComponent.GameObject?.FileID, oldPosition);
