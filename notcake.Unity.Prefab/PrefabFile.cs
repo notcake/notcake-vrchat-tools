@@ -17,14 +17,24 @@ namespace notcake.Unity.Prefab
     ///     Other <c>.prefab</c> files order their Unity objects as follows:
     ///     <list type="number">
     ///         <item>
-    ///             <c>GameObject</c>s ordered by <c>fileID</c>.
+    ///             <c>GameObject</c>s ordered by <c>fileID</c>.<br/>
     ///             <list type="number">
-    ///                 <item>Per-<c>GameObject</c> components in <c>m_Component</c> order.</item>
+    ///                 <item>
+    ///                     Per-<c>GameObject</c> components in <c>m_Component</c> order.
+    ///                     <para/>
+    ///                     May include components added to <c>GameObject</c>s that have been
+    ///                     instantiated by <c>PrefabInstance</c>s, depending on the <c>.prefab</c>
+    ///                     file.
+    ///                 </item>
     ///             </list>
     ///         </item>
     ///         <item>
     ///             Components added to <c>GameObject</c>s that have been instantiated by
     ///             <c>PrefabInstance</c>s, ordered in an unknown way.
+    ///             <para/>
+    ///             May be merged with the previous set of <c>GameObject</c>s and <c>Component</c>s,
+    ///             ordered by <c>GameObject</c> <c>fileID</c>, depending on the <c>.prefab</c>
+    ///             file.
     ///         </item>
     ///         <item>
     ///             <c>PrefabInstance</c>s ordered by <c>fileID</c>, ascending.

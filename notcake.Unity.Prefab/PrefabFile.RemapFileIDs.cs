@@ -159,9 +159,29 @@ namespace notcake.Unity.Prefab
             else
             {
                 Dictionary<FileID, int> oldPositions = new();
+                bool seenPrefabInstanceInstantiatedGameObjectComponent = false;
+                // A boolean indicating whether `Component`s added to `GameObject`s instantiated by
+                // `PrefabInstance`s appear after non-`PrefabInstance` instantiated `GameObject`s
+                // and `Component`s.
+                bool separatePrefabInstanceInstantiatedGameObjectComponents = true;
                 for (int i = 0; i < this.objects.Count; i++)
                 {
                     oldPositions[this.objects[i].FileID] = i;
+
+                    if (this.objects[i] is Component component &&
+                        (component.GameObject?.IsInstance ?? false))
+                    {
+                        seenPrefabInstanceInstantiatedGameObjectComponent = true;
+                    }
+
+                    if (seenPrefabInstanceInstantiatedGameObjectComponent &&
+                        !this.objects[i].IsInstance &&
+                        this.objects[i] is GameObject)
+                    {
+                        // This `GameObject` comes after `Component`s added to
+                        // `PrefabInstance`-instantiated `GameObject`s.
+                        separatePrefabInstanceInstantiatedGameObjectComponents = false;
+                    }
                 }
 
                 if (newOrderingHint != null)
@@ -173,56 +193,98 @@ namespace notcake.Unity.Prefab
                     }
                 }
 
-                (uint Group, FileID? ParentFileID, long OldPosition) GetSortKey(Object @object)
+                // Used to order `Component`s in `PrefabInstance`-instantiated `GameObject`s.
+                // Contains the position of the first `Component` in each `GameObject`, taking
+                // `newOrderingHint` into account.
+                Dictionary<FileID, int> gameObjectComponentPositions = new();
+                foreach (Object @object in this.objects)
+                {
+                    if (@object is not Component component) { continue; }
+                    if (component.GameObject?.FileID is not FileID gameObjectFileID) { continue; }
+
+                    if (gameObjectComponentPositions.ContainsKey(gameObjectFileID))
+                    {
+                        gameObjectComponentPositions[gameObjectFileID] = Math.Min(
+                            gameObjectComponentPositions[gameObjectFileID],
+                            oldPositions[component.FileID]
+                        );
+                    }
+                    else
+                    {
+                        gameObjectComponentPositions[gameObjectFileID] =
+                            oldPositions[component.FileID];
+                    }
+                }
+
+                (
+                    uint Group,
+                    FileID? ParentFileID,
+                    long GroupPosition,
+                    long OldPosition
+                ) GetSortKey(Object @object)
                 {
                     Component? objectAsComponent = @object as Component;
                     int oldPosition = oldPositions[@object.FileID];
 
                     if (this.otherObjectsSet.Contains(@object))
                     {
-                        return (0, null, oldPosition);
+                        return (0, null, -1, oldPosition);
                     }
                     else if (!@object.IsInstance && @object is GameObject)
                     {
                         // `GameObjects` ordered by `fileID`.
-                        return (1, @object.FileID, -1);
+                        return (1, @object.FileID, -1, -1);
                     }
                     else if (!@object.IsInstance &&
                              objectAsComponent != null &&
                              !(objectAsComponent.GameObject?.IsInstance ?? false))
                     {
                         // Per-`GameObject` components in `m_Component` order.
-                        return (1, objectAsComponent.GameObject?.FileID, oldPosition);
+                        return (1, objectAsComponent.GameObject?.FileID, -1, oldPosition);
                     }
                     else if (!@object.IsInstance &&
                              objectAsComponent != null &&
                              (objectAsComponent.GameObject?.IsInstance ?? false))
                     {
-                        // `Component`s added to `GameObject`s that have been instantiated by
-                        // `PrefabInstance`s, ordered in an unknown way.
-                        return (2, null, oldPosition);
+                        if (separatePrefabInstanceInstantiatedGameObjectComponents)
+                        {
+                            // `Component`s added to `GameObject`s that have been instantiated by
+                            // `PrefabInstance`s, ordered in an unknown way.
+                            int gameObjectComponentPosition =
+                                gameObjectComponentPositions[objectAsComponent.GameObject.FileID];
+                            // `m_Component` order is determined by `Component` `fileID`s, which have
+                            // changed, so use `newOrderingHint` through `oldPosition`.
+                            return (2, null, gameObjectComponentPosition, oldPosition);
+                        }
+                        else
+                        {
+                            // Per-`GameObject` components in `m_Component` order, including
+                            // components added to `GameObject`s that have been instantiated by
+                            // `PrefabInstance`s.
+                            return (1, objectAsComponent.GameObject?.FileID, -1, oldPosition);
+                        }
                     }
                     else if (!@object.IsInstance && @object is PrefabInstance)
                     {
                         // `PrefabInstance`s ordered by `fileID`, ascending.
-                        return (3, @object.FileID, -1);
+                        return (3, @object.FileID, -1, -1);
                     }
                     else if (@object.IsInstance)
                     {
                         // Per-`PrefabInstance` object instances ordered in an unknown way.
-                        return (3, @object.PrefabInstance?.FileID, oldPosition);
+                        return (3, @object.PrefabInstance?.FileID, -1, oldPosition);
                     }
                     else
                     {
-                        return (2, null, oldPosition);
+                        return (2, null, -1, oldPosition);
                     }
                 }
 
                 this.objects.Sort(
                     (a, b) =>
                     {
-                        (uint, FileID?, long) aSortKey = GetSortKey(a);
-                        (uint, FileID?, long) bSortKey = GetSortKey(b);
+                        (uint, FileID?, long, long) aSortKey = GetSortKey(a);
+                        (uint, FileID?, long, long) bSortKey = GetSortKey(b);
                         return aSortKey.CompareTo(bSortKey);
                     }
                 );
