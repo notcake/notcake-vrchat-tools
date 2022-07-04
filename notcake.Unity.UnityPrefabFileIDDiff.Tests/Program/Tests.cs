@@ -18,6 +18,8 @@ namespace notcake.Unity.UnityPrefabFileIDDiff.Tests.Program
     [DeploymentItem("Resources/NestedPrefab3a.prefab")]
     [DeploymentItem("Resources/GameObject.prefab")]
     [DeploymentItem("Resources/PrefabVariant.prefab")]
+    [DeploymentItem("Resources/GameObjectAndPrefabInstanceComponentsA.prefab")]
+    [DeploymentItem("Resources/GameObjectAndPrefabInstanceComponentsB.prefab")]
     [DeploymentItem("Resources/Avatars/NeosAvatar_SetupVRC_Arktoon.prefab")]
     [DeploymentItem("Resources/Avatars/Toastacuga.prefab")]
     public class Tests
@@ -114,6 +116,64 @@ namespace notcake.Unity.UnityPrefabFileIDDiff.Tests.Program
                 new[]
                 {
                     "* PrefabInstance &6612481006152796884",
+                }
+            }
+        )]
+        [DataRow(
+            "Resources/GameObjectAndPrefabInstanceComponentsA.prefab",
+            new object[]
+            {
+                new[]
+                {
+                    "* GameObjectAndPrefabInstanceComponents &1295435386291451790",
+                    "  * Transform &6900024346194483700",
+                    "  * Child 1 &3246267058468154075",
+                    "    * Transform &446762813002330973",
+                    "    * MonoBehaviour &2445294676174449731",
+                    "    * MonoBehaviour &8101453579712206767",
+                    "  * Child 2 &1130121813463608664",
+                    "    * Transform &9040806159793680495",
+                    "    * MonoBehaviour &1527149206699838427",
+                    "    * MonoBehaviour &3122549251109195932",
+                    "  * PrefabInstance &3053240162318261203",
+                    "    * GameObject &7007784988793393148 stripped",
+                    "      * MonoBehaviour &7167184517858377455",
+                    "      * MonoBehaviour &9148366837940496496",
+                    "    * Transform &7025730173712034165 stripped",
+                    "  * PrefabInstance &6440009496554267807",
+                    "    * GameObject &1315169930923323568 stripped",
+                    "      * MonoBehaviour &6864714582965902295",
+                    "      * MonoBehaviour &4575199936328865583",
+                    "    * Transform &1333244823837382201 stripped",
+                }
+            }
+        )]
+        [DataRow(
+            "Resources/GameObjectAndPrefabInstanceComponentsB.prefab",
+            new object[]
+            {
+                new[]
+                {
+                    "* GameObjectAndPrefabInstanceComponents &3703353320363238006",
+                    "  * Transform &9034067136953502732",
+                    "  * Child 1 &1122439843563388707",
+                    "    * Transform &2642913480352949925",
+                    "    * MonoBehaviour &248213834871142843",
+                    "    * MonoBehaviour &5976451239843250775",
+                    "  * Child 2 &3256177755652880544",
+                    "    * Transform &6911300203454047639",
+                    "    * MonoBehaviour &4012493667704102435",
+                    "    * MonoBehaviour &705726316260509028",
+                    "  * PrefabInstance &631051950086114859",
+                    "    * GameObject &4890378088392989188 stripped",
+                    "      * MonoBehaviour &4749133767824403223",
+                    "      * MonoBehaviour &6659483049433300360",
+                    "    * Transform &4836536120345214093 stripped",
+                    "  * PrefabInstance &8917471562729173351",
+                    "    * GameObject &3521489118299776328 stripped",
+                    "      * MonoBehaviour &9068813882046058031",
+                    "      * MonoBehaviour &2152962228995310295",
+                    "    * Transform &3467235967246025665 stripped",
                 }
             }
         )]
@@ -664,6 +724,34 @@ namespace notcake.Unity.UnityPrefabFileIDDiff.Tests.Program
                 "    > Transform &3804593009358545394 stripped",
                 "      > New Inner Child &6053085283548292871",
                 "        > Transform &643158201123562314",
+            },
+            1
+        )]
+        [DataRow(
+            "Resources/GameObjectAndPrefabInstanceComponentsA.prefab",
+            "Resources/GameObjectAndPrefabInstanceComponentsB.prefab",
+            new[]
+            {
+                "* GameObjectAndPrefabInstanceComponents &1295435386291451790 -> &3703353320363238006",
+                "  * Transform &6900024346194483700 -> &9034067136953502732",
+                "  * Child 1 &3246267058468154075 -> &1122439843563388707",
+                "    * Transform &446762813002330973 -> &2642913480352949925",
+                "    * MonoBehaviour &2445294676174449731 -> &248213834871142843",
+                "    * MonoBehaviour &8101453579712206767 -> &5976451239843250775",
+                "  * Child 2 &1130121813463608664 -> &3256177755652880544",
+                "    * Transform &9040806159793680495 -> &6911300203454047639",
+                "    * MonoBehaviour &1527149206699838427 -> &4012493667704102435",
+                "    * MonoBehaviour &3122549251109195932 -> &705726316260509028",
+                "  * PrefabInstance &3053240162318261203 -> &631051950086114859",
+                "    * GameObject &7007784988793393148 -> &4890378088392989188 stripped",
+                "      * MonoBehaviour &7167184517858377455 -> &4749133767824403223",
+                "      * MonoBehaviour &9148366837940496496 -> &6659483049433300360",
+                "    * Transform &7025730173712034165 -> &4836536120345214093 stripped",
+                "  * PrefabInstance &6440009496554267807 -> &8917471562729173351",
+                "    * GameObject &1315169930923323568 -> &3521489118299776328 stripped",
+                "      * MonoBehaviour &6864714582965902295 -> &9068813882046058031",
+                "      * MonoBehaviour &4575199936328865583 -> &2152962228995310295",
+                "    * Transform &1333244823837382201 -> &3467235967246025665 stripped",
             },
             1
         )]
