@@ -20,6 +20,10 @@ namespace notcake.Unity.UnityPrefabFileIDDiff.Tests.Program
     [DeploymentItem("Resources/PrefabVariant.prefab")]
     [DeploymentItem("Resources/GameObjectAndPrefabInstanceComponentsA.prefab")]
     [DeploymentItem("Resources/GameObjectAndPrefabInstanceComponentsB.prefab")]
+    [DeploymentItem("Resources/ReorderedComponentsA.prefab")]
+    [DeploymentItem("Resources/ReorderedComponentsAReordered.prefab")]
+    [DeploymentItem("Resources/ReorderedComponentsB.prefab")]
+    [DeploymentItem("Resources/ReorderedComponentsBReordered.prefab")]
     [DeploymentItem("Resources/Avatars/NeosAvatar_SetupVRC_Arktoon.prefab")]
     [DeploymentItem("Resources/Avatars/Toastacuga.prefab")]
     public class Tests
@@ -174,6 +178,58 @@ namespace notcake.Unity.UnityPrefabFileIDDiff.Tests.Program
                     "      * MonoBehaviour &9068813882046058031",
                     "      * MonoBehaviour &2152962228995310295",
                     "    * Transform &3467235967246025665 stripped",
+                }
+            }
+        )]
+        [DataRow(
+            "Resources/ReorderedComponentsA.prefab",
+            new object[]
+            {
+                new[]
+                {
+                    "* ReorderedComponents &2853174732634746890",
+                    "  * Transform &6356941340319174409",
+                    "  * MonoBehaviour &6968487965431459191",
+                    "  * MonoBehaviour &4797569303984820519",
+                }
+            }
+        )]
+        [DataRow(
+            "Resources/ReorderedComponentsAReordered.prefab",
+            new object[]
+            {
+                new[]
+                {
+                    "* ReorderedComponents &2853174732634746890",
+                    "  * Transform &6356941340319174409",
+                    "  * MonoBehaviour &4797569303984820519",
+                    "  * MonoBehaviour &6968487965431459191",
+                }
+            }
+        )]
+        [DataRow(
+            "Resources/ReorderedComponentsB.prefab",
+            new object[]
+            {
+                new[]
+                {
+                    "* ReorderedComponents &7097020843408076707",
+                    "  * Transform &2151957425077981344",
+                    "  * MonoBehaviour &536295912774078094",
+                    "  * MonoBehaviour &2688692364277560030",
+                }
+            }
+        )]
+        [DataRow(
+            "Resources/ReorderedComponentsBReordered.prefab",
+            new object[]
+            {
+                new[]
+                {
+                    "* ReorderedComponents &7097020843408076707",
+                    "  * Transform &2151957425077981344",
+                    "  * MonoBehaviour &2688692364277560030",
+                    "  * MonoBehaviour &536295912774078094",
                 }
             }
         )]
@@ -752,6 +808,30 @@ namespace notcake.Unity.UnityPrefabFileIDDiff.Tests.Program
                 "      * MonoBehaviour &6864714582965902295 -> &9068813882046058031",
                 "      * MonoBehaviour &4575199936328865583 -> &2152962228995310295",
                 "    * Transform &1333244823837382201 -> &3467235967246025665 stripped",
+            },
+            1
+        )]
+        [DataRow(
+            "Resources/ReorderedComponentsA.prefab",
+            "Resources/ReorderedComponentsB.prefab",
+            new[]
+            {
+                "* ReorderedComponents &2853174732634746890 -> &7097020843408076707",
+                "  * Transform &6356941340319174409 -> &2151957425077981344",
+                "  * MonoBehaviour &6968487965431459191 -> &2688692364277560030",
+                "  * MonoBehaviour &4797569303984820519 -> &536295912774078094",
+            },
+            1
+        )]
+        [DataRow(
+            "Resources/ReorderedComponentsAReordered.prefab",
+            "Resources/ReorderedComponentsBReordered.prefab",
+            new[]
+            {
+                "* ReorderedComponents &2853174732634746890 -> &7097020843408076707",
+                "  * Transform &6356941340319174409 -> &2151957425077981344",
+                "  * MonoBehaviour &4797569303984820519 -> &536295912774078094",
+                "  * MonoBehaviour &6968487965431459191 -> &2688692364277560030",
             },
             1
         )]
