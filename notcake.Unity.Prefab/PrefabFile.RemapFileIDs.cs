@@ -158,7 +158,10 @@ namespace notcake.Unity.Prefab
             }
             else
             {
+                // Used to order other objects and `PrefabInstance`-instantiated Unity objects.
                 Dictionary<FileID, int> oldPositions = new();
+                // Used to order `Component`s within `GameObject`s.
+                Dictionary<FileID, int> componentPositions = new();
                 bool seenPrefabInstanceInstantiatedGameObjectComponent = false;
                 // A boolean indicating whether `Component`s added to `GameObject`s instantiated by
                 // `PrefabInstance`s appear after non-`PrefabInstance` instantiated `GameObject`s
@@ -167,6 +170,7 @@ namespace notcake.Unity.Prefab
                 for (int i = 0; i < this.objects.Count; i++)
                 {
                     oldPositions[this.objects[i].FileID] = i;
+                    componentPositions[this.objects[i].FileID] = i;
 
                     if (this.objects[i] is Component component &&
                         (component.GameObject?.IsInstance ?? false))
@@ -240,7 +244,8 @@ namespace notcake.Unity.Prefab
                              !(objectAsComponent.GameObject?.IsInstance ?? false))
                     {
                         // Per-`GameObject` components in `m_Component` order.
-                        return (1, objectAsComponent.GameObject?.FileID, -1, oldPosition);
+                        int componentPosition = componentPositions[@object.FileID];
+                        return (1, objectAsComponent.GameObject?.FileID, -1, componentPosition);
                     }
                     else if (!@object.IsInstance &&
                              objectAsComponent != null &&
@@ -261,7 +266,8 @@ namespace notcake.Unity.Prefab
                             // Per-`GameObject` components in `m_Component` order, including
                             // components added to `GameObject`s that have been instantiated by
                             // `PrefabInstance`s.
-                            return (1, objectAsComponent.GameObject?.FileID, -1, oldPosition);
+                            int componentPosition = componentPositions[@object.FileID];
+                            return (1, objectAsComponent.GameObject?.FileID, -1, componentPosition);
                         }
                     }
                     else if (!@object.IsInstance && @object is PrefabInstance)
