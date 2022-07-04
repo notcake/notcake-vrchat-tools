@@ -16,7 +16,7 @@ namespace notcake.Unity.UnityPrefabFileIDDiff.Tests.Program
     [DeploymentItem("Resources/NestedPrefab2.prefab")]
     [DeploymentItem("Resources/NestedPrefab3.prefab")]
     [DeploymentItem("Resources/NestedPrefab3a.prefab")]
-    [DeploymentItem("Resources/PrefabVariant1.prefab")]
+    [DeploymentItem("Resources/GameObject.prefab")]
     [DeploymentItem("Resources/PrefabVariant2.prefab")]
     [DeploymentItem("Resources/Avatars/NeosAvatar_SetupVRC_Arktoon.prefab")]
     [DeploymentItem("Resources/Avatars/Toastacuga.prefab")]
@@ -97,12 +97,12 @@ namespace notcake.Unity.UnityPrefabFileIDDiff.Tests.Program
             }
         )]
         [DataRow(
-            "Resources/PrefabVariant1.prefab",
+            "Resources/GameObject.prefab",
             new object[]
             {
                 new[]
                 {
-                    "* GameObject 1 &5413307586876789807",
+                    "* GameObject &5413307586876789807",
                     "  * Transform &5467125436267295398",
                 }
             }
