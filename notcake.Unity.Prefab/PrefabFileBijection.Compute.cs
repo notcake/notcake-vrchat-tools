@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using notcake.Algorithms;
 using notcake.Functional;
+using notcake.Unity.Yaml.Nodes;
 
 namespace notcake.Unity.Prefab
 {
@@ -356,20 +358,36 @@ namespace notcake.Unity.Prefab
                 List<Component?> leftComponentsOfType  = leftComponentsByType[type];
                 List<Component?> rightComponentsOfType = rightComponentsByType[type];
 
-                // Map `Component`s of the same type to each other, assuming that their order is
-                // unchanged.
-                PrefabFileBijection.ComputeCommonMapping(
-                    prefabFileBijection,
-                    leftComponentsByType[type],
-                    rightComponentsByType[type],
-                    (leftComponent, rightComponent) =>
+                List<(Component, Component, uint DiffCost)> mappingDiffCosts = new();
+                for (int i = 0; i < leftComponentsOfType.Count; i++)
+                {
+                    for (int j = 0; j < rightComponentsOfType.Count; j++)
                     {
-                        if (prefabFileBijection.ContainsLeft(leftComponent))   { return; }
-                        if (prefabFileBijection.ContainsRight(rightComponent)) { return; }
+                        Component? leftComponent  = leftComponentsOfType[i];
+                        Component? rightComponent = rightComponentsOfType[j];
 
-                        prefabFileBijection.Add(leftComponent, rightComponent);
+                        if (leftComponent == null || rightComponent == null) { continue; }
+
+                        uint diffLineCount = PrefabFileBijection.ComputeDifferenceCount(
+                            leftComponent.YamlMapping,
+                            rightComponent.YamlMapping
+                        );
+
+                        mappingDiffCosts.Add((leftComponent, rightComponent, diffLineCount));
                     }
-                );
+                }
+
+                mappingDiffCosts.Sort((a, b) => a.DiffCost.CompareTo(b.DiffCost));
+
+                // Keep picking the pairs of unmatched components with the smallest YAML diff out,
+                // until there are no more possible mappings.
+                foreach ((Component leftComponent, Component rightComponent, _) in mappingDiffCosts)
+                {
+                    if (prefabFileBijection.ContainsLeft(leftComponent))   { continue; }
+                    if (prefabFileBijection.ContainsRight(rightComponent)) { continue; }
+
+                    prefabFileBijection.Add(leftComponent, rightComponent);
+                }
             }
         }
 
@@ -717,7 +735,6 @@ namespace notcake.Unity.Prefab
             }
         }
 
-
         /// <summary>
         ///     Maps two ordered lists of <typeparamref name="ObjectT">ObjectTs</typeparamref> to
         ///     each other.
@@ -762,6 +779,186 @@ namespace notcake.Unity.Prefab
 
                 addMapping(leftObject, rightObject);
             }
+        }
+
+        /// <summary>
+        ///     Computes the number of differences between two YAML trees.
+        /// </summary>
+        /// <param name="leftYamlNode">The left YAML node of the diff.</param>
+        /// <param name="rightYamlNode">The right YAML node of the diff.</param>
+        /// <returns>
+        ///     The number of differences between <paramref name="leftYamlNode"/> and
+        ///     <paramref name="rightYamlNode"/>.
+        /// </returns>
+        private static uint ComputeDifferenceCount(YamlNode? leftYamlNode, YamlNode? rightYamlNode)
+        {
+            Dictionary<(YamlNode?, YamlNode?), uint> differenceCounts = new();
+            DepthFirstSearch.Enumerate<(YamlNode?, YamlNode?)>(
+                (leftYamlNode, rightYamlNode),
+                ((YamlNode? Left, YamlNode? Right) yamlNodes) =>
+                {
+                    List<(YamlNode?, YamlNode?)> edges = new();
+                    switch (yamlNodes)
+                    {
+                        case (YamlMapping leftYamlMapping, YamlMapping rightYamlMapping):
+                            foreach (YamlNode leftKey in leftYamlMapping.Keys)
+                            {
+                                YamlNode leftYamlNode = leftYamlMapping[leftKey];
+                                rightYamlMapping.TryGetValue(leftKey, out YamlNode? rightYamlNode);
+                                edges.Add((leftYamlNode, rightYamlNode));
+                            }
+                            foreach (YamlNode rightKey in rightYamlMapping.Keys)
+                            {
+                                if (leftYamlMapping.ContainsKey(rightKey)) { continue; }
+                                YamlNode rightYamlNode = rightYamlMapping[rightKey];
+                                edges.Add((null, rightYamlNode));
+                            }
+                            break;
+                        case (YamlSequence leftYamlSequence, YamlSequence rightYamlSequence):
+                            int commonCount =
+                                Math.Min( leftYamlSequence.Count, rightYamlSequence.Count);
+                            for (int i = 0; i < commonCount; i++)
+                            {
+                                edges.Add((leftYamlSequence[i], rightYamlSequence[i]));
+                            }
+                            for (int i = commonCount; i < leftYamlSequence.Count; i++)
+                            {
+                                edges.Add((leftYamlSequence[i], null));
+                            }
+                            for (int i = commonCount; i < rightYamlSequence.Count; i++)
+                            {
+                                edges.Add((null, rightYamlSequence[i]));
+                            }
+                            break;
+                        case (YamlScalar, YamlScalar):
+                            break;
+                        case (YamlNode, YamlNode):
+                            edges.Add((yamlNodes.Left, null));
+                            edges.Add((null, yamlNodes.Right));
+                            break;
+                        case (YamlMapping leftYamlMapping, null):
+                            foreach (YamlNode yamlNode in leftYamlMapping.Values)
+                            {
+                                edges.Add((yamlNode, null));
+                            }
+                            break;
+                        case (YamlSequence leftYamlSequence, null):
+                            foreach (YamlNode yamlNode in leftYamlSequence)
+                            {
+                                edges.Add((yamlNode, null));
+                            }
+                            break;
+                        case (YamlScalar, null):
+                        case (YamlNode,   null):
+                            break;
+                        case (null, YamlMapping rightYamlMapping):
+                            foreach (YamlNode yamlNode in rightYamlMapping.Values)
+                            {
+                                edges.Add((null, yamlNode));
+                            }
+                            break;
+                        case (null, YamlSequence rightYamlSequence):
+                            foreach (YamlNode yamlNode in rightYamlSequence)
+                            {
+                                edges.Add((null, yamlNode));
+                            }
+                            break;
+                        case (null, YamlScalar):
+                        case (null, YamlNode  ):
+                            break;
+                        case (null, null):
+                            break;
+                    }
+                    return edges;
+                },
+                null,
+                ((YamlNode? Left, YamlNode? Right) yamlNodes) =>
+                {
+                    uint differenceCount = 0;
+                    switch (yamlNodes)
+                    {
+                        case (YamlMapping leftYamlMapping, YamlMapping rightYamlMapping):
+                            foreach (YamlNode leftKey in leftYamlMapping.Keys)
+                            {
+                                YamlNode leftYamlNode = leftYamlMapping[leftKey];
+                                rightYamlMapping.TryGetValue(leftKey, out YamlNode? rightYamlNode);
+                                differenceCount += differenceCounts[(leftYamlNode, rightYamlNode)];
+                            }
+                            foreach (YamlNode rightKey in rightYamlMapping.Keys)
+                            {
+                                if (leftYamlMapping.ContainsKey(rightKey)) { continue; }
+                                YamlNode rightYamlNode = rightYamlMapping[rightKey];
+                                differenceCount += differenceCounts[(null, rightYamlNode)];
+                            }
+                            break;
+                        case (YamlSequence leftYamlSequence, YamlSequence rightYamlSequence):
+                            int commonCount =
+                                Math.Min(leftYamlSequence.Count, rightYamlSequence.Count);
+                            for (int i = 0; i < commonCount; i++)
+                            {
+                                differenceCount +=
+                                    differenceCounts[(leftYamlSequence[i], rightYamlSequence[i])];
+                            }
+                            for (int i = commonCount; i < leftYamlSequence.Count; i++)
+                            {
+                                differenceCount += differenceCounts[(leftYamlSequence[i], null)];
+                            }
+                            for (int i = commonCount; i < rightYamlSequence.Count; i++)
+                            {
+                                differenceCount += differenceCounts[(null, rightYamlSequence[i])];
+                            }
+                            break;
+                        case (YamlScalar leftYamlScalar, YamlScalar rightYamlScalar):
+                            if (!leftYamlScalar.PresentationEquals(rightYamlScalar))
+                            {
+                                differenceCount += 2;
+                            }
+                            break;
+                        case (YamlNode, YamlNode):
+                            differenceCount += differenceCounts[(yamlNodes.Left, null)];
+                            differenceCount += differenceCounts[(null, yamlNodes.Right)];
+                            break;
+                        case (YamlMapping leftYamlMapping, null):
+                            foreach (YamlNode yamlNode in leftYamlMapping.Values)
+                            {
+                                differenceCount += differenceCounts[(yamlNode, null)];
+                            }
+                            break;
+                        case (YamlSequence leftYamlSequence, null):
+                            foreach (YamlNode yamlNode in leftYamlSequence)
+                            {
+                                differenceCount += differenceCounts[(yamlNode, null)];
+                            }
+                            break;
+                        case (YamlScalar, null):
+                        case (YamlNode,   null):
+                            differenceCount += 1;
+                            break;
+                        case (null, YamlMapping rightYamlMapping):
+                            foreach (YamlNode yamlNode in rightYamlMapping.Values)
+                            {
+                                differenceCount += differenceCounts[(null, yamlNode)];
+                            }
+                            break;
+                        case (null, YamlSequence rightYamlSequence):
+                            foreach (YamlNode yamlNode in rightYamlSequence)
+                            {
+                                differenceCount += differenceCounts[(null, yamlNode)];
+                            }
+                            break;
+                        case (null, YamlScalar):
+                        case (null, YamlNode  ):
+                            differenceCount += 1;
+                            break;
+                        case (null, null):
+                            break;
+                    }
+
+                    differenceCounts[(yamlNodes.Left, yamlNodes.Right)] = differenceCount;
+                }
+            );
+
+            return differenceCounts[(leftYamlNode, rightYamlNode)];
         }
 
         /// <summary>

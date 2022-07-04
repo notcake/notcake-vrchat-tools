@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\notcake.Algorithms\notcake.Algorithms.csproj" />
     <ProjectReference Include="..\notcake.Functional\notcake.Functional.csproj" />
     <ProjectReference Include="..\notcake.Unity.Yaml\notcake.Unity.Yaml.csproj" />
   </ItemGroup>
