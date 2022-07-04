@@ -15,6 +15,10 @@ namespace notcake.Unity.Prefab.Tests
     [DeploymentItem("Resources/PrefabVariant.prefab")]
     [DeploymentItem("Resources/GameObjectAndPrefabInstanceComponentsA.prefab")]
     [DeploymentItem("Resources/GameObjectAndPrefabInstanceComponentsB.prefab")]
+    [DeploymentItem("Resources/ReorderedComponentsA.prefab")]
+    [DeploymentItem("Resources/ReorderedComponentsAReordered.prefab")]
+    [DeploymentItem("Resources/ReorderedComponentsB.prefab")]
+    [DeploymentItem("Resources/ReorderedComponentsBReordered.prefab")]
     [DeploymentItem("Resources/Avatars/NeosAvatar_SetupVRC_Arktoon.prefab")]
     [DeploymentItem("Resources/Avatars/Toastacuga.prefab")]
     public class PrefabFileBijectionTests
@@ -33,6 +37,10 @@ namespace notcake.Unity.Prefab.Tests
         [DataRow("Resources/PrefabVariant.prefab")]
         [DataRow("Resources/GameObjectAndPrefabInstanceComponentsA.prefab")]
         [DataRow("Resources/GameObjectAndPrefabInstanceComponentsB.prefab")]
+        [DataRow("Resources/ReorderedComponentsA.prefab")]
+        [DataRow("Resources/ReorderedComponentsAReordered.prefab")]
+        [DataRow("Resources/ReorderedComponentsB.prefab")]
+        [DataRow("Resources/ReorderedComponentsBReordered.prefab")]
         [DataRow("Resources/Avatars/NeosAvatar_SetupVRC_Arktoon.prefab")]
         [DataRow("Resources/Avatars/Toastacuga.prefab")]
         public void SelfBijection(string path)
@@ -66,6 +74,10 @@ namespace notcake.Unity.Prefab.Tests
         [DataRow("Resources/PrefabVariant.prefab")]
         [DataRow("Resources/GameObjectAndPrefabInstanceComponentsA.prefab")]
         [DataRow("Resources/GameObjectAndPrefabInstanceComponentsB.prefab")]
+        [DataRow("Resources/ReorderedComponentsA.prefab")]
+        [DataRow("Resources/ReorderedComponentsAReordered.prefab")]
+        [DataRow("Resources/ReorderedComponentsB.prefab")]
+        [DataRow("Resources/ReorderedComponentsBReordered.prefab")]
         [DataRow("Resources/Avatars/NeosAvatar_SetupVRC_Arktoon.prefab")]
         [DataRow("Resources/Avatars/Toastacuga.prefab")]
         public void CloneBijection(string path)
@@ -169,6 +181,28 @@ namespace notcake.Unity.Prefab.Tests
                 1333244823837382201, 3467235967246025665, // Transform
                 6864714582965902295, 9068813882046058031, // Event System
                 4575199936328865583, 2152962228995310295, // Event System
+            }
+        )]
+        [DataRow(
+            "Resources/ReorderedComponentsA.prefab",
+            "Resources/ReorderedComponentsB.prefab",
+            new object?[]
+            {
+                2853174732634746890, 7097020843408076707, // GameObject: ReorderedComponents
+                6356941340319174409, 2151957425077981344, // Transform
+                6968487965431459191, 2688692364277560030, // Event System
+                4797569303984820519,  536295912774078094, // Event System
+            }
+        )]
+        [DataRow(
+            "Resources/ReorderedComponentsAReordered.prefab",
+            "Resources/ReorderedComponentsBReordered.prefab",
+            new object?[]
+            {
+                2853174732634746890, 7097020843408076707, // GameObject: ReorderedComponents
+                6356941340319174409, 2151957425077981344, // Transform
+                6968487965431459191, 2688692364277560030, // Event System
+                4797569303984820519,  536295912774078094, // Event System
             }
         )]
         public void Bijection(string leftPath, string rightPath, object?[] fileIDMapping)
