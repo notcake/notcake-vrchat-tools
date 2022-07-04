@@ -31,6 +31,18 @@
     <None Update="Resources\GameObject.prefab.meta">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Resources\GameObjectAndPrefabInstanceComponentsA.prefab">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\GameObjectAndPrefabInstanceComponentsA.prefab.meta">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\GameObjectAndPrefabInstanceComponentsB.prefab">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\GameObjectAndPrefabInstanceComponentsB.prefab.meta">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\InvalidTag.prefab">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
