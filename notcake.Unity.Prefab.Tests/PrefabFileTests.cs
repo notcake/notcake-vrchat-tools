@@ -14,7 +14,7 @@ namespace notcake.Unity.Prefab.Tests
     [DeploymentItem("Resources/NestedPrefab3.prefab")]
     [DeploymentItem("Resources/NestedPrefab3a.prefab")]
     [DeploymentItem("Resources/GameObject.prefab")]
-    [DeploymentItem("Resources/PrefabVariant2.prefab")]
+    [DeploymentItem("Resources/PrefabVariant.prefab")]
     [DeploymentItem("Resources/Avatars/NeosAvatar_SetupVRC_Arktoon.prefab")]
     [DeploymentItem("Resources/Avatars/Toastacuga.prefab")]
     public class PrefabFileTests
@@ -29,7 +29,7 @@ namespace notcake.Unity.Prefab.Tests
         [DataRow("Resources/NestedPrefab3.prefab")]
         [DataRow("Resources/NestedPrefab3a.prefab")]
         [DataRow("Resources/GameObject.prefab")]
-        [DataRow("Resources/PrefabVariant2.prefab")]
+        [DataRow("Resources/PrefabVariant.prefab")]
         [DataRow("Resources/Avatars/NeosAvatar_SetupVRC_Arktoon.prefab")]
         [DataRow("Resources/Avatars/Toastacuga.prefab")]
         public void RoundTrip(string path)
@@ -53,7 +53,7 @@ namespace notcake.Unity.Prefab.Tests
         [DataRow("Resources/NestedPrefab3.prefab",                       new long[] {           })]
         [DataRow("Resources/NestedPrefab3a.prefab",                      new long[] {           })]
         [DataRow("Resources/GameObject.prefab",                          new long[] {           })]
-        [DataRow("Resources/PrefabVariant2.prefab",                      new long[] {           })]
+        [DataRow("Resources/PrefabVariant.prefab",                       new long[] {           })]
         [DataRow("Resources/Avatars/NeosAvatar_SetupVRC_Arktoon.prefab", new long[] {           })]
         [DataRow("Resources/Avatars/Toastacuga.prefab",                  new long[] { 100100000 })]
         public void OtherObjects(string path, long[] otherObjects)
@@ -87,7 +87,7 @@ namespace notcake.Unity.Prefab.Tests
         [DataRow("Resources/NestedPrefab3.prefab",                       4989725120814738964, 8820928727568499859,                null)]
         [DataRow("Resources/NestedPrefab3a.prefab",                      6293954053335516682, 7497849768378543245,                null)]
         [DataRow("Resources/GameObject.prefab",                          5413307586876789807, 5467125436267295398,                null)]
-        [DataRow("Resources/PrefabVariant2.prefab",                                     null,                null, 6612481006152796884)]
+        [DataRow("Resources/PrefabVariant.prefab",                                      null,                null, 6612481006152796884)]
         [DataRow("Resources/Avatars/NeosAvatar_SetupVRC_Arktoon.prefab",    1485637429502818,    4090137802650142,                null)]
         [DataRow("Resources/Avatars/Toastacuga.prefab",                     1445245993874940,    4851560997859476,                null)]
         public void Roots(
@@ -118,7 +118,7 @@ namespace notcake.Unity.Prefab.Tests
         [DataRow("Resources/NestedPrefab3.prefab",                       new long[] { })]
         [DataRow("Resources/NestedPrefab3a.prefab",                      new long[] { })]
         [DataRow("Resources/GameObject.prefab",                          new long[] { })]
-        [DataRow("Resources/PrefabVariant2.prefab",                      new long[] { })]
+        [DataRow("Resources/PrefabVariant.prefab",                       new long[] { })]
         [DataRow("Resources/Avatars/NeosAvatar_SetupVRC_Arktoon.prefab", new long[] { })]
         [DataRow("Resources/Avatars/Toastacuga.prefab",                  new long[] { })]
         public void OrphanObjects(string path, long[] orphanObjects)
@@ -143,7 +143,7 @@ namespace notcake.Unity.Prefab.Tests
         [DataRow("Resources/NestedPrefab3.prefab")]
         [DataRow("Resources/NestedPrefab3a.prefab")]
         [DataRow("Resources/GameObject.prefab")]
-        [DataRow("Resources/PrefabVariant2.prefab")]
+        [DataRow("Resources/PrefabVariant.prefab")]
         [DataRow("Resources/Avatars/NeosAvatar_SetupVRC_Arktoon.prefab")]
         [DataRow("Resources/Avatars/Toastacuga.prefab")]
         public void SelfRemapFileIDs(string path)

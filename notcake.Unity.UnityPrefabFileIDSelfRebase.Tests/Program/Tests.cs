@@ -16,7 +16,7 @@ namespace notcake.Unity.UnityPrefabFileIDSelfRebase.Tests.Program
     [DeploymentItem("Resources/NestedPrefab3.prefab")]
     [DeploymentItem("Resources/NestedPrefab3a.prefab")]
     [DeploymentItem("Resources/GameObject.prefab")]
-    [DeploymentItem("Resources/PrefabVariant2.prefab")]
+    [DeploymentItem("Resources/PrefabVariant.prefab")]
     [DeploymentItem("Resources/Avatars/NeosAvatar_SetupVRC_Arktoon.prefab")]
     [DeploymentItem("Resources/Avatars/Toastacuga.prefab")]
     public class Tests
@@ -31,7 +31,7 @@ namespace notcake.Unity.UnityPrefabFileIDSelfRebase.Tests.Program
         [DataRow("Resources/NestedPrefab3.prefab")]
         [DataRow("Resources/NestedPrefab3a.prefab")]
         [DataRow("Resources/GameObject.prefab")]
-        [DataRow("Resources/PrefabVariant2.prefab")]
+        [DataRow("Resources/PrefabVariant.prefab")]
         [DataRow("Resources/Avatars/NeosAvatar_SetupVRC_Arktoon.prefab")]
         [DataRow("Resources/Avatars/Toastacuga.prefab")]
         public void SelfSelfRebase(string path)

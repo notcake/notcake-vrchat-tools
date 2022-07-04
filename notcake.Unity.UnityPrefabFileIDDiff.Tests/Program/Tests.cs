@@ -17,7 +17,7 @@ namespace notcake.Unity.UnityPrefabFileIDDiff.Tests.Program
     [DeploymentItem("Resources/NestedPrefab3.prefab")]
     [DeploymentItem("Resources/NestedPrefab3a.prefab")]
     [DeploymentItem("Resources/GameObject.prefab")]
-    [DeploymentItem("Resources/PrefabVariant2.prefab")]
+    [DeploymentItem("Resources/PrefabVariant.prefab")]
     [DeploymentItem("Resources/Avatars/NeosAvatar_SetupVRC_Arktoon.prefab")]
     [DeploymentItem("Resources/Avatars/Toastacuga.prefab")]
     public class Tests
@@ -108,7 +108,7 @@ namespace notcake.Unity.UnityPrefabFileIDDiff.Tests.Program
             }
         )]
         [DataRow(
-            "Resources/PrefabVariant2.prefab",
+            "Resources/PrefabVariant.prefab",
             new object[]
             {
                 new[]

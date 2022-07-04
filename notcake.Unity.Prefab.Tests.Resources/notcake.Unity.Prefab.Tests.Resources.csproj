@@ -58,10 +58,10 @@
     <None Update="Resources\NestedPrefab3a.prefab">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Resources\PrefabVariant2.prefab">
+    <None Update="Resources\PrefabVariant.prefab">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Resources\PrefabVariant2.prefab.meta">
+    <None Update="Resources\PrefabVariant.prefab.meta">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
