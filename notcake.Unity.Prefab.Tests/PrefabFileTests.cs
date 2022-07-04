@@ -15,6 +15,8 @@ namespace notcake.Unity.Prefab.Tests
     [DeploymentItem("Resources/NestedPrefab3a.prefab")]
     [DeploymentItem("Resources/GameObject.prefab")]
     [DeploymentItem("Resources/PrefabVariant.prefab")]
+    [DeploymentItem("Resources/GameObjectAndPrefabInstanceComponentsA.prefab")]
+    [DeploymentItem("Resources/GameObjectAndPrefabInstanceComponentsB.prefab")]
     [DeploymentItem("Resources/Avatars/NeosAvatar_SetupVRC_Arktoon.prefab")]
     [DeploymentItem("Resources/Avatars/Toastacuga.prefab")]
     public class PrefabFileTests
@@ -30,6 +32,8 @@ namespace notcake.Unity.Prefab.Tests
         [DataRow("Resources/NestedPrefab3a.prefab")]
         [DataRow("Resources/GameObject.prefab")]
         [DataRow("Resources/PrefabVariant.prefab")]
+        [DataRow("Resources/GameObjectAndPrefabInstanceComponentsA.prefab")]
+        [DataRow("Resources/GameObjectAndPrefabInstanceComponentsB.prefab")]
         [DataRow("Resources/Avatars/NeosAvatar_SetupVRC_Arktoon.prefab")]
         [DataRow("Resources/Avatars/Toastacuga.prefab")]
         public void RoundTrip(string path)
@@ -48,14 +52,16 @@ namespace notcake.Unity.Prefab.Tests
         ///     The expected <c>fileID</c>s of <see cref="PrefabFile.OtherObjects"/>.
         /// </param>
         [DataTestMethod]
-        [DataRow("Resources/NestedPrefab1.prefab",                       new long[] {           })]
-        [DataRow("Resources/NestedPrefab2.prefab",                       new long[] {           })]
-        [DataRow("Resources/NestedPrefab3.prefab",                       new long[] {           })]
-        [DataRow("Resources/NestedPrefab3a.prefab",                      new long[] {           })]
-        [DataRow("Resources/GameObject.prefab",                          new long[] {           })]
-        [DataRow("Resources/PrefabVariant.prefab",                       new long[] {           })]
-        [DataRow("Resources/Avatars/NeosAvatar_SetupVRC_Arktoon.prefab", new long[] {           })]
-        [DataRow("Resources/Avatars/Toastacuga.prefab",                  new long[] { 100100000 })]
+        [DataRow("Resources/NestedPrefab1.prefab",                          new long[] {           })]
+        [DataRow("Resources/NestedPrefab2.prefab",                          new long[] {           })]
+        [DataRow("Resources/NestedPrefab3.prefab",                          new long[] {           })]
+        [DataRow("Resources/NestedPrefab3a.prefab",                         new long[] {           })]
+        [DataRow("Resources/GameObject.prefab",                             new long[] {           })]
+        [DataRow("Resources/PrefabVariant.prefab",                          new long[] {           })]
+        [DataRow("Resources/GameObjectAndPrefabInstanceComponentsA.prefab", new long[] {           })]
+        [DataRow("Resources/GameObjectAndPrefabInstanceComponentsB.prefab", new long[] {           })]
+        [DataRow("Resources/Avatars/NeosAvatar_SetupVRC_Arktoon.prefab",    new long[] {           })]
+        [DataRow("Resources/Avatars/Toastacuga.prefab",                     new long[] { 100100000 })]
         public void OtherObjects(string path, long[] otherObjects)
         {
             string prefabContents = File.ReadAllText(path);
@@ -82,14 +88,16 @@ namespace notcake.Unity.Prefab.Tests
         ///     The expected <c>fileID</c> of the root <c>PrefabInstance</c>.
         /// </param>
         [DataTestMethod]
-        [DataRow("Resources/NestedPrefab1.prefab",                       4989725120814738964, 8820928727568499859,                null)]
-        [DataRow("Resources/NestedPrefab2.prefab",                       4989725120814738964, 8820928727568499859,                null)]
-        [DataRow("Resources/NestedPrefab3.prefab",                       4989725120814738964, 8820928727568499859,                null)]
-        [DataRow("Resources/NestedPrefab3a.prefab",                      6293954053335516682, 7497849768378543245,                null)]
-        [DataRow("Resources/GameObject.prefab",                          5413307586876789807, 5467125436267295398,                null)]
-        [DataRow("Resources/PrefabVariant.prefab",                                      null,                null, 6612481006152796884)]
-        [DataRow("Resources/Avatars/NeosAvatar_SetupVRC_Arktoon.prefab",    1485637429502818,    4090137802650142,                null)]
-        [DataRow("Resources/Avatars/Toastacuga.prefab",                     1445245993874940,    4851560997859476,                null)]
+        [DataRow("Resources/NestedPrefab1.prefab",                          4989725120814738964, 8820928727568499859,                null)]
+        [DataRow("Resources/NestedPrefab2.prefab",                          4989725120814738964, 8820928727568499859,                null)]
+        [DataRow("Resources/NestedPrefab3.prefab",                          4989725120814738964, 8820928727568499859,                null)]
+        [DataRow("Resources/NestedPrefab3a.prefab",                         6293954053335516682, 7497849768378543245,                null)]
+        [DataRow("Resources/GameObject.prefab",                             5413307586876789807, 5467125436267295398,                null)]
+        [DataRow("Resources/PrefabVariant.prefab",                                         null,                null, 6612481006152796884)]
+        [DataRow("Resources/GameObjectAndPrefabInstanceComponentsA.prefab", 1295435386291451790, 6900024346194483700,                null)]
+        [DataRow("Resources/GameObjectAndPrefabInstanceComponentsB.prefab", 3703353320363238006, 9034067136953502732,                null)]
+        [DataRow("Resources/Avatars/NeosAvatar_SetupVRC_Arktoon.prefab",       1485637429502818,    4090137802650142,                null)]
+        [DataRow("Resources/Avatars/Toastacuga.prefab",                        1445245993874940,    4851560997859476,                null)]
         public void Roots(
             string path,
             long? rootGameObject,
@@ -113,14 +121,16 @@ namespace notcake.Unity.Prefab.Tests
         ///     The expected <c>fileID</c>s of <see cref="PrefabFile.OrphanObjects"/>.
         /// </param>
         [DataTestMethod]
-        [DataRow("Resources/NestedPrefab1.prefab",                       new long[] { })]
-        [DataRow("Resources/NestedPrefab2.prefab",                       new long[] { })]
-        [DataRow("Resources/NestedPrefab3.prefab",                       new long[] { })]
-        [DataRow("Resources/NestedPrefab3a.prefab",                      new long[] { })]
-        [DataRow("Resources/GameObject.prefab",                          new long[] { })]
-        [DataRow("Resources/PrefabVariant.prefab",                       new long[] { })]
-        [DataRow("Resources/Avatars/NeosAvatar_SetupVRC_Arktoon.prefab", new long[] { })]
-        [DataRow("Resources/Avatars/Toastacuga.prefab",                  new long[] { })]
+        [DataRow("Resources/NestedPrefab1.prefab",                          new long[] { })]
+        [DataRow("Resources/NestedPrefab2.prefab",                          new long[] { })]
+        [DataRow("Resources/NestedPrefab3.prefab",                          new long[] { })]
+        [DataRow("Resources/NestedPrefab3a.prefab",                         new long[] { })]
+        [DataRow("Resources/GameObject.prefab",                             new long[] { })]
+        [DataRow("Resources/PrefabVariant.prefab",                          new long[] { })]
+        [DataRow("Resources/GameObjectAndPrefabInstanceComponentsA.prefab", new long[] { })]
+        [DataRow("Resources/GameObjectAndPrefabInstanceComponentsB.prefab", new long[] { })]
+        [DataRow("Resources/Avatars/NeosAvatar_SetupVRC_Arktoon.prefab",    new long[] { })]
+        [DataRow("Resources/Avatars/Toastacuga.prefab",                     new long[] { })]
         public void OrphanObjects(string path, long[] orphanObjects)
         {
             string prefabContents = File.ReadAllText(path);
@@ -144,6 +154,8 @@ namespace notcake.Unity.Prefab.Tests
         [DataRow("Resources/NestedPrefab3a.prefab")]
         [DataRow("Resources/GameObject.prefab")]
         [DataRow("Resources/PrefabVariant.prefab")]
+        [DataRow("Resources/GameObjectAndPrefabInstanceComponentsA.prefab")]
+        [DataRow("Resources/GameObjectAndPrefabInstanceComponentsB.prefab")]
         [DataRow("Resources/Avatars/NeosAvatar_SetupVRC_Arktoon.prefab")]
         [DataRow("Resources/Avatars/Toastacuga.prefab")]
         public void SelfRemapFileIDs(string path)
@@ -161,13 +173,25 @@ namespace notcake.Unity.Prefab.Tests
         }
 
         /// <summary>
-        ///     Tests that a prefab file's <c>fileID</c>s can be remapped correctly.
+        ///     Tests that two prefab files with the same Unity objects but different <c>fileID</c>s
+        ///     can be remapped onto each other correctly.
         /// </summary>
-        [TestMethod]
-        public void RemapFileIDs()
+        /// <param name="leftPath">
+        ///     The path to the left <c>.prefab</c> file to load as input.
+        /// </param>
+        /// <param name="rightPath">
+        ///     The path to the right <c>.prefab</c> file to load as input.
+        /// </param>
+        [DataTestMethod]
+        [DataRow("Resources/NestedPrefab3.prefab", "Resources/NestedPrefab3a.prefab")]
+        [DataRow(
+            "Resources/GameObjectAndPrefabInstanceComponentsA.prefab",
+            "Resources/GameObjectAndPrefabInstanceComponentsB.prefab"
+        )]
+        public void RemapFileIDs(string leftPath, string rightPath)
         {
-            string leftPrefabContents  = File.ReadAllText("Resources/NestedPrefab3.prefab");
-            string rightPrefabContents = File.ReadAllText("Resources/NestedPrefab3a.prefab");
+            string leftPrefabContents  = File.ReadAllText(leftPath);
+            string rightPrefabContents = File.ReadAllText(rightPath);
             PrefabFile leftPrefabFile  = PrefabFile.Deserialize(leftPrefabContents);
             PrefabFile rightPrefabFile = PrefabFile.Deserialize(rightPrefabContents);
             PrefabFileBijection prefabFileBijection =

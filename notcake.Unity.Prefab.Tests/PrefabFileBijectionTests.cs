@@ -13,6 +13,8 @@ namespace notcake.Unity.Prefab.Tests
     [DeploymentItem("Resources/NestedPrefab3a.prefab")]
     [DeploymentItem("Resources/GameObject.prefab")]
     [DeploymentItem("Resources/PrefabVariant.prefab")]
+    [DeploymentItem("Resources/GameObjectAndPrefabInstanceComponentsA.prefab")]
+    [DeploymentItem("Resources/GameObjectAndPrefabInstanceComponentsB.prefab")]
     [DeploymentItem("Resources/Avatars/NeosAvatar_SetupVRC_Arktoon.prefab")]
     [DeploymentItem("Resources/Avatars/Toastacuga.prefab")]
     public class PrefabFileBijectionTests
@@ -29,6 +31,8 @@ namespace notcake.Unity.Prefab.Tests
         [DataRow("Resources/NestedPrefab3a.prefab")]
         [DataRow("Resources/GameObject.prefab")]
         [DataRow("Resources/PrefabVariant.prefab")]
+        [DataRow("Resources/GameObjectAndPrefabInstanceComponentsA.prefab")]
+        [DataRow("Resources/GameObjectAndPrefabInstanceComponentsB.prefab")]
         [DataRow("Resources/Avatars/NeosAvatar_SetupVRC_Arktoon.prefab")]
         [DataRow("Resources/Avatars/Toastacuga.prefab")]
         public void SelfBijection(string path)
@@ -60,6 +64,8 @@ namespace notcake.Unity.Prefab.Tests
         [DataRow("Resources/NestedPrefab3a.prefab")]
         [DataRow("Resources/GameObject.prefab")]
         [DataRow("Resources/PrefabVariant.prefab")]
+        [DataRow("Resources/GameObjectAndPrefabInstanceComponentsA.prefab")]
+        [DataRow("Resources/GameObjectAndPrefabInstanceComponentsB.prefab")]
         [DataRow("Resources/Avatars/NeosAvatar_SetupVRC_Arktoon.prefab")]
         [DataRow("Resources/Avatars/Toastacuga.prefab")]
         public void CloneBijection(string path)
@@ -136,6 +142,33 @@ namespace notcake.Unity.Prefab.Tests
                 2786369713623583212, 3804593009358545394, // Transform
                 5073144092867333913, 6053085283548292871, // GameObject: Nested Inner Child
                 1912756242714561364,  643158201123562314, // Transform
+            }
+        )]
+        [DataRow(
+            "Resources/GameObjectAndPrefabInstanceComponentsA.prefab",
+            "Resources/GameObjectAndPrefabInstanceComponentsB.prefab",
+            new object?[]
+            {
+                1295435386291451790, 3703353320363238006, // GameObject: GameObjectAndPrefabInstanceComponents
+                6900024346194483700, 9034067136953502732, // Transform
+                3246267058468154075, 1122439843563388707, // GameObject: Child 1
+                 446762813002330973, 2642913480352949925, // Transform
+                2445294676174449731,  248213834871142843, // Event System
+                8101453579712206767, 5976451239843250775, // Event System
+                1130121813463608664, 3256177755652880544, // GameObject: Child 2
+                9040806159793680495, 6911300203454047639, // Transform
+                1527149206699838427, 4012493667704102435, // Event System
+                3122549251109195932,  705726316260509028, // Event System
+                3053240162318261203,  631051950086114859, // PrefabInstance: PrefabInstance 1
+                7007784988793393148, 4890378088392989188, // GameObject: PrefabInstance 1
+                7025730173712034165, 4836536120345214093, // Transform
+                7167184517858377455, 4749133767824403223, // Event System
+                9148366837940496496, 6659483049433300360, // Event System
+                6440009496554267807, 8917471562729173351, // PrefabInstance: PrefabInstance 2
+                1315169930923323568, 3521489118299776328, // GameObject: PrefabInstance 2
+                1333244823837382201, 3467235967246025665, // Transform
+                6864714582965902295, 9068813882046058031, // Event System
+                4575199936328865583, 2152962228995310295, // Event System
             }
         )]
         public void Bijection(string leftPath, string rightPath, object?[] fileIDMapping)
