@@ -19,6 +19,10 @@ namespace notcake.Unity.UnityPrefabFileIDSelfRebase.Tests.Program
     [DeploymentItem("Resources/PrefabVariant.prefab")]
     [DeploymentItem("Resources/GameObjectAndPrefabInstanceComponentsA.prefab")]
     [DeploymentItem("Resources/GameObjectAndPrefabInstanceComponentsB.prefab")]
+    [DeploymentItem("Resources/ReorderedComponentsA.prefab")]
+    [DeploymentItem("Resources/ReorderedComponentsAReordered.prefab")]
+    [DeploymentItem("Resources/ReorderedComponentsB.prefab")]
+    [DeploymentItem("Resources/ReorderedComponentsBReordered.prefab")]
     [DeploymentItem("Resources/Avatars/NeosAvatar_SetupVRC_Arktoon.prefab")]
     [DeploymentItem("Resources/Avatars/Toastacuga.prefab")]
     public class Tests
@@ -36,6 +40,10 @@ namespace notcake.Unity.UnityPrefabFileIDSelfRebase.Tests.Program
         [DataRow("Resources/PrefabVariant.prefab")]
         [DataRow("Resources/GameObjectAndPrefabInstanceComponentsA.prefab")]
         [DataRow("Resources/GameObjectAndPrefabInstanceComponentsB.prefab")]
+        [DataRow("Resources/ReorderedComponentsA.prefab")]
+        [DataRow("Resources/ReorderedComponentsAReordered.prefab")]
+        [DataRow("Resources/ReorderedComponentsB.prefab")]
+        [DataRow("Resources/ReorderedComponentsBReordered.prefab")]
         [DataRow("Resources/Avatars/NeosAvatar_SetupVRC_Arktoon.prefab")]
         [DataRow("Resources/Avatars/Toastacuga.prefab")]
         public void SelfSelfRebase(string path)
@@ -56,18 +64,41 @@ namespace notcake.Unity.UnityPrefabFileIDSelfRebase.Tests.Program
         /// </summary>
         /// <param name="sourcePath">The path to the source prefab file.</param>
         /// <param name="destinationPath">The path to the destination prefab file.</param>
+        /// <param name="expectedOutputPath">
+        ///     The path to the <c>.prefab</c> file that contains the expected output.
+        /// </param>
         [DataTestMethod]
-        [DataRow("Resources/NestedPrefab3.prefab",  "Resources/NestedPrefab3a.prefab")]
-        [DataRow("Resources/NestedPrefab3a.prefab", "Resources/NestedPrefab3.prefab" )]
         [DataRow(
+            "Resources/NestedPrefab3.prefab",
+            "Resources/NestedPrefab3a.prefab",
+            "Resources/NestedPrefab3.prefab"
+        )]
+        [DataRow(
+            "Resources/NestedPrefab3a.prefab",
+            "Resources/NestedPrefab3.prefab",
+            "Resources/NestedPrefab3a.prefab"
+        )]
+        [DataRow(
+            "Resources/GameObjectAndPrefabInstanceComponentsA.prefab",
+            "Resources/GameObjectAndPrefabInstanceComponentsB.prefab",
+            "Resources/GameObjectAndPrefabInstanceComponentsA.prefab"
+        )]
+        [DataRow(
+            "Resources/GameObjectAndPrefabInstanceComponentsB.prefab",
             "Resources/GameObjectAndPrefabInstanceComponentsA.prefab",
             "Resources/GameObjectAndPrefabInstanceComponentsB.prefab"
         )]
         [DataRow(
-            "Resources/GameObjectAndPrefabInstanceComponentsB.prefab",
-            "Resources/GameObjectAndPrefabInstanceComponentsA.prefab"
+            "Resources/ReorderedComponentsA.prefab",
+            "Resources/ReorderedComponentsB.prefab",
+            "Resources/ReorderedComponentsAReordered.prefab"
         )]
-        public void SelfRebase(string sourcePath, string destinationPath)
+        [DataRow(
+            "Resources/ReorderedComponentsB.prefab",
+            "Resources/ReorderedComponentsA.prefab",
+            "Resources/ReorderedComponentsBReordered.prefab"
+        )]
+        public void SelfRebase(string sourcePath, string destinationPath, string expectedOutputPath)
         {
             TestConsole testConsole = new();
             int exitCode = Program.RootCommand.Invoke(
@@ -75,7 +106,7 @@ namespace notcake.Unity.UnityPrefabFileIDSelfRebase.Tests.Program
                 testConsole
             );
 
-            Assert.AreEqual(File.ReadAllText(sourcePath), testConsole.Out.ToString());
+            Assert.AreEqual(File.ReadAllText(expectedOutputPath), testConsole.Out.ToString());
             Assert.AreEqual("", testConsole.Error.ToString());
             Assert.AreEqual(0, exitCode);
         }
