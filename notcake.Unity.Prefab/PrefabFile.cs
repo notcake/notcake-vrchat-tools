@@ -14,33 +14,70 @@ namespace notcake.Unity.Prefab
     /// <remarks>
     ///     Some <c>.prefab</c> files order their Unity objects by <c>fileID</c>, ascending.
     ///     <para/>
-    ///     Other <c>.prefab</c> files order their Unity objects as follows:
+    ///     Some <c>.prefab</c> files order their Unity objects as follows:
     ///     <list type="number">
     ///         <item>
-    ///             <c>GameObject</c>s ordered by <c>fileID</c>.<br/>
+    ///             Groups for all <c>GameObject</c>s, including those instantiated by
+    ///             <c>PrefabInstance</c>s, ordered by <c>fileID</c>, ascending.
     ///             <list type="number">
     ///                 <item>
-    ///                     Per-<c>GameObject</c> components in <c>m_Component</c> order.
+    ///                     The <c>GameObject</c>, if not instantiated by a <c>PrefabInstance</c>.
+    ///                 </item>
+    ///                 <item>
+    ///                     The <c>GameObject</c>'s components in <c>m_Component</c> order.
     ///                     <para/>
-    ///                     May include components added to <c>GameObject</c>s that have been
-    ///                     instantiated by <c>PrefabInstance</c>s, depending on the <c>.prefab</c>
-    ///                     file.
+    ///                     If the <c>GameObject</c> has been instantiated by a
+    ///                     <c>PrefabInstance</c>, the <c>m_Component</c> order is usually, but not
+    ///                     always, ascending <c>fileID</c> order.
     ///                 </item>
     ///             </list>
     ///         </item>
     ///         <item>
-    ///             Components added to <c>GameObject</c>s that have been instantiated by
-    ///             <c>PrefabInstance</c>s, ordered in an unknown way.
-    ///             <para/>
-    ///             May be merged with the previous set of <c>GameObject</c>s and <c>Component</c>s,
-    ///             ordered by <c>GameObject</c> <c>fileID</c>, depending on the <c>.prefab</c>
-    ///             file.
+    ///             Groups for <c>PrefabInstance</c>s, ordered by <c>fileID</c>, ascending.
+    ///             <list type="number">
+    ///                 <item>The <c>PrefabInstance</c>.</item>
+    ///                 <item>
+    ///                     The <c>PrefabInstance</c>'s instantiated objects, ordered in an unknown
+    ///                     way.
+    ///                 </item>
+    ///             </list>
     ///         </item>
+    ///     </list>
+    ///     Other <c>.prefab</c> files order their Unity objects as follows:
+    ///     <list type="number">
     ///         <item>
-    ///             <c>PrefabInstance</c>s ordered by <c>fileID</c>, ascending.
+    ///             Groups for non-<c>PrefabInstance</c> instantiated <c>GameObject</c>s and
+    ///             <c>PrefabInstance</c>s, ordered by <c>fileID</c>, ascending.
     ///             <list type="number">
     ///                 <item>
-    ///                     Per-<c>PrefabInstance</c> object instances ordered in an unknown way.
+    ///                     The <c>GameObject</c>, if the group is for a <c>GameObject</c>.
+    ///                 </item>
+    ///                 <item>
+    ///                     The <c>GameObject</c>'s components in <c>m_Component</c> order, if the
+    ///                     group is for a <c>GameObject</c>.
+    ///                 </item>
+    ///                 <item>
+    ///                     Groups for the <c>PrefabInstance</c>'s <c>GameObject</c> instances,
+    ///                     ordered in an unknown way, if the group is for a <c>PrefabInstance</c>.
+    ///                     <list type="number">
+    ///                         <item>
+    ///                             The <c>GameObject</c> instance's components in
+    ///                             <c>m_Component</c> order.
+    ///                             <para/>
+    ///                             The <c>m_Component</c> order is usually, but not always,
+    ///                             ascending <c>fileID</c> order.
+    ///                         </item>
+    ///                     </list>
+    ///                 </item>
+    ///             </list>
+    ///         </item>
+    ///         <item>
+    ///             Groups for <c>PrefabInstance</c>s, ordered by <c>fileID</c>, ascending.
+    ///             <list type="number">
+    ///                 <item>The <c>PrefabInstance</c>.</item>
+    ///                 <item>
+    ///                     The <c>PrefabInstance</c>'s object instances, ordered in an unknown
+    ///                     way.
     ///                 </item>
     ///             </list>
     ///         </item>
