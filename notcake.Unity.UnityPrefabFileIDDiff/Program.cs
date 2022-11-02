@@ -55,9 +55,9 @@ namespace notcake.Unity.UnityPrefabFileIDDiff
         ///     The entry point of the application.
         /// </summary>
         /// <param name="args">The command line arguments for the application.</param>
-        public static void Main(string[] args)
+        public static int Main(string[] args)
         {
-            Program.RootCommand.Invoke(args);
+            return Program.RootCommand.Invoke(args);
         }
 
         /// <summary>
