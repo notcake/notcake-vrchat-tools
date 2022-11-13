@@ -33,6 +33,7 @@ jobs:
       shell: bash
       run: |
         tag="${GITHUB_REF#refs/tags/}"
+        version="${tag#v}"
         release_name="notcake-vrchat-tools-$tag-${{ matrix.name }}"
         executable_projects=$(
           grep -F "<OutputType>Exe</OutputType>" */*.csproj -l |
@@ -47,6 +48,7 @@ jobs:
                          --no-self-contained \
                          --property:PublishSingleFile=true \
                          --property:UseAppHost=true \
+                         --property:Version=$version \
                          --output build
         done
         
